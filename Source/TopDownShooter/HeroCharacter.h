@@ -25,10 +25,10 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
 	bool bIsReloading;
 
-protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
 	AWeapon* Weapon;
 
+protected:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite)
 	USpringArmComponent* CameraArm;
 

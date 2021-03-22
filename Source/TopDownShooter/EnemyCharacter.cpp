@@ -39,7 +39,7 @@ void AEnemyCharacter::BeginPlay() {
 }
 
 void AEnemyCharacter::DestroyEnemy() {
-	Spawner->DecrEnemies();
+	Spawner->DecrActors();
 	DestroyEnemyEffect();
 	Destroy();
 }

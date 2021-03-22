@@ -5,6 +5,8 @@
 #include "Kismet/GameplayStatics.h"
 #include "GameFramework/PlayerStart.h"
 #include "TopDownShooter.h"
+#include "EnemySpawner.h"
+#include "BaseCharacter.h"
 
 void ATopDownShooterGameModeBase::PauseGame() {
 	ChangeMenuWidget(PauseWidgetClass);
@@ -22,6 +24,7 @@ void ATopDownShooterGameModeBase::RespawnPlayer() {
 		AActor* Hero = World->SpawnActor(HeroCharacterClass.Get(), &PlayerSpawnTransform);
 		World->GetFirstPlayerController()->Possess(Cast<APawn>(Hero));
 		GameEnemySpawner->Reset();
+		AmmoSpawner->Reset();
 	}
 }
 
@@ -37,6 +40,14 @@ void ATopDownShooterGameModeBase::DestroyAllEnemies() {
 	TArray<AActor*> FoundEnemies;
 	UGameplayStatics::GetAllActorsWithTag(GetWorld(), ENEMY, FoundEnemies);
 	for (AActor* Found : FoundEnemies) {
+		Found->Destroy();
+	}
+}
+
+void ATopDownShooterGameModeBase::DestroyAllAmmo() {
+	TArray<AActor*> FoundAmmo;
+	UGameplayStatics::GetAllActorsWithTag(GetWorld(), AMMO, FoundAmmo);
+	for (AActor* Found : FoundAmmo) {
 		Found->Destroy();
 	}
 }
@@ -62,6 +73,11 @@ void ATopDownShooterGameModeBase::BeginPlay() {
 	TArray<AActor*> FoundSpawners;
 	UGameplayStatics::GetAllActorsOfClass(GetWorld(), GameEnemySpawner->StaticClass(), FoundSpawners);
 	GameEnemySpawner = Cast<AEnemySpawner>(FoundSpawners[0]);
+
+	//get ammo spawner
+	TArray<AActor*> FoundAmmoSpawners;
+	UGameplayStatics::GetAllActorsOfClass(GetWorld(), AmmoSpawner->StaticClass(), FoundAmmoSpawners);
+	AmmoSpawner = Cast<AActorSpawner>(FoundAmmoSpawners[0]);
 
 }
 

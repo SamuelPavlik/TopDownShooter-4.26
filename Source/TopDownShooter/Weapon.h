@@ -41,14 +41,14 @@ public:
 
 	void StopShooting();
 
+	void AddClips(uint32 NumOfClips);
+
 protected:
 	UFUNCTION(BlueprintImplementableEvent)
 	void Fire();
 
 	UFUNCTION(BlueprintImplementableEvent)
 	void NoAmmoEffect();
-
-	void AddClips(uint32 NumOfClips);
 
 	virtual void BeginPlay() override;
 

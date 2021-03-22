@@ -12,8 +12,8 @@
 AHeroCharacter::AHeroCharacter() {
 	Tags.Add(FRIENDLY);
 	CameraArm = CreateDefaultSubobject<USpringArmComponent>(TEXT("CameraArm"));
-	CameraArm->SetupAttachment(GetRootComponent());
-	Camera = CreateDefaultSubobject<UCameraComponent>(TEXT("Camera"));
+	CameraArm->SetupAttachment(GetRootComponent());	
+	Camera = CreateDefaultSubobject<UCameraComponent>(TEXT("Camera"));	
 	Camera->SetupAttachment(CameraArm, USpringArmComponent::SocketName);
 }
 
