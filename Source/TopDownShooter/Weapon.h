@@ -12,16 +12,16 @@ class TOPDOWNSHOOTER_API AWeapon : public AActor
 	GENERATED_BODY()
 
 public:
-	UPROPERTY(EditAnywhere, Category = "Weapon Properties")
+	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "Weapon Properties")
 	float RoundsPerSec;
 
-	UPROPERTY(EditAnywhere, Category = "Weapon Properties")
+	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "Weapon Properties")
 	int MaxClipAmmo;
 
-	UPROPERTY(VisibleAnywhere, Category = "Weapon Properties")
+	UPROPERTY(BlueprintReadOnly, VisibleAnywhere, Category = "Weapon Properties")
 	int CurrentClipAmmo;
 
-	UPROPERTY(VisibleAnywhere, Category = "Weapon Properties")
+	UPROPERTY(BlueprintReadOnly, VisibleAnywhere, Category = "Weapon Properties")
 	int CurrentClip;
 
 private:
