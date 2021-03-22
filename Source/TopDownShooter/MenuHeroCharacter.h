@@ -35,10 +35,17 @@ public:
 
 	TArray<AActor*> GetTargets();
 
+	bool NeedsToReload();
+
+	void ReloadWeapon();
+
 	virtual void AffectHealth(float) override;
 
-public:
 	virtual void Tick(float) override;
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void ReloadEffect();
 
 private:
 	bool FacingEnemy();

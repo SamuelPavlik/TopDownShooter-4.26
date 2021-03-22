@@ -10,6 +10,9 @@ void AMenuHeroController::Tick(float DeltaTime) {
 
 	if (MenuHero->GetTargets().Num() > 0)
 		SetFocus(MenuHero->GetTargets()[0]);
+
+	if (MenuHero->NeedsToReload())
+		MenuHero->ReloadWeapon();
 }
 
 void AMenuHeroController::BeginPlay() {

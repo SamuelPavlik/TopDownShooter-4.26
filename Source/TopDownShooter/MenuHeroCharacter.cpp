@@ -18,6 +18,16 @@ TArray<AActor*> AMenuHeroCharacter::GetTargets() {
 	return EnemiesInView;
 }
 
+bool AMenuHeroCharacter::NeedsToReload() {
+	return Weapon->CurrentClipAmmo <= 0;
+}
+
+void AMenuHeroCharacter::ReloadWeapon() {
+	if (Weapon->Reload()) {
+		ReloadEffect();
+	}
+}
+
 void AMenuHeroCharacter::AffectHealth(float) {}
 
 void AMenuHeroCharacter::Tick(float) {
