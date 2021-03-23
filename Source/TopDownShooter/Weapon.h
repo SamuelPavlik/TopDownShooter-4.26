@@ -21,7 +21,7 @@ public:
 	UPROPERTY(BlueprintReadOnly, VisibleAnywhere, Category = "Weapon Properties")
 	int CurrentClipAmmo;
 
-	UPROPERTY(BlueprintReadOnly, VisibleAnywhere, Category = "Weapon Properties")
+	UPROPERTY(BlueprintReadWrite, VisibleAnywhere)
 	int CurrentClip;
 
 private:
