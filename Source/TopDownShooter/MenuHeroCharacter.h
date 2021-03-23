@@ -27,6 +27,9 @@ protected:
 	UPROPERTY(BlueprintReadWrite)
 	TArray<AActor*> ActorsToIgnore;
 
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
+	bool bIsReloading;
+
 private:
 	TArray<AActor*> EnemiesInView;
 
@@ -48,7 +51,7 @@ protected:
 	void ReloadEffect();
 
 private:
-	bool FacingEnemy();
+	bool CanShoot();
 
 	void Shoot(bool bPressed);
 };

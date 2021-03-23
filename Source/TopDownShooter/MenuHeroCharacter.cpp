@@ -32,10 +32,10 @@ void AMenuHeroCharacter::AffectHealth(float) {}
 
 void AMenuHeroCharacter::Tick(float) {
 	ViewRadius->GetOverlappingActors(EnemiesInView, AEnemyCharacter::StaticClass());
-	Shoot(FacingEnemy());
+	Shoot(CanShoot());
 }
 
-bool AMenuHeroCharacter::FacingEnemy() {
+bool AMenuHeroCharacter::CanShoot() {
 	FHitResult Hit;
 
 	FCollisionQueryParams Params = FCollisionQueryParams::DefaultQueryParam;
@@ -50,7 +50,7 @@ bool AMenuHeroCharacter::FacingEnemy() {
 
 	if (UKismetSystemLibrary::IsValid(Hit.GetActor()) && Hit.GetActor()->ActorHasTag("Enemy")) {
 		if (IIDamagabley* ToDamage = Cast<IIDamagabley>(Hit.GetActor())) {
-			return !ToDamage->IsKilled();
+			return !ToDamage->IsKilled() && !bIsReloading;
 		}
 	}
 
