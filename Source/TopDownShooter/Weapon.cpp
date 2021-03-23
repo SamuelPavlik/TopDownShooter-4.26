@@ -15,7 +15,6 @@ void AWeapon::FireFunc() {
 	CanFire = true;
 	if (!Released && CurrentClipAmmo > 0) {
 		CurrentClipAmmo--;
-		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, FString::Printf(TEXT("Ammo: %d"), CurrentClipAmmo));
 		this->Fire();
 		CanFire = false;
 		GetWorldTimerManager().SetTimer(Handle, this, &AWeapon::FireFunc, 1.0f / RoundsPerSec, false);
