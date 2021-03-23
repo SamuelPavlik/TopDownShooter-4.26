@@ -6,7 +6,6 @@
 #include "GameFramework/PlayerStart.h"
 #include "TopDownShooter.h"
 #include "EnemySpawner.h"
-#include "BaseCharacter.h"
 
 void ATopDownShooterGameModeBase::PauseGame() {
 	ChangeMenuWidget(PauseWidgetClass);
@@ -20,6 +19,7 @@ void ATopDownShooterGameModeBase::UnpauseGame() {
 
 void ATopDownShooterGameModeBase::RespawnPlayer() {
 	DestroyAllEnemies();
+	DestroyAllAmmo();
 	if (UWorld* World = GetWorld()) {
 		AActor* Hero = World->SpawnActor(HeroCharacterClass.Get(), &PlayerSpawnTransform);
 		World->GetFirstPlayerController()->Possess(Cast<APawn>(Hero));

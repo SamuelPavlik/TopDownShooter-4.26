@@ -5,9 +5,11 @@
 #include "Blueprint/UserWidget.h"
 #include "CoreMinimal.h"
 #include "GameFramework/GameModeBase.h"
-#include "EnemySpawner.h"
 #include "BaseCharacter.h"
 #include "TopDownShooterGameModeBase.generated.h"
+
+class AActorSpawner;
+class AEnemySpawner;
 
 /**
  * 
@@ -37,6 +39,8 @@ public:
 private:
     void DestroyAllEnemies();
 
+    void DestroyAllAmmo();
+
 protected:
     virtual void BeginPlay() override;
 
@@ -61,4 +65,6 @@ private:
     FTransform PlayerSpawnTransform;
 
     AEnemySpawner* GameEnemySpawner;
+
+    AActorSpawner* AmmoSpawner;
 };
