@@ -8,7 +8,7 @@ void AEnemyController::BeginPlay() {
 	Super::BeginPlay();
 	
 	FTimerHandle Handle;
-	GetWorldTimerManager().SetTimer(Handle, this, &AEnemyController::TrackPlayer, 1, true);
+	GetWorldTimerManager().SetTimer(Handle, this, &AEnemyController::TrackPlayer, 0.1f, true);
 }
 
 void AEnemyController::TrackPlayer() {

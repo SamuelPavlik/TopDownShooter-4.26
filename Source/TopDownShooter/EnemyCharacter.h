@@ -28,6 +28,9 @@ protected:
 	UPROPERTY(BlueprintReadWrite)
 	AEnemySpawner* Spawner;
 
+	UPROPERTY(BlueprintReadWrite)
+	bool bHeroInRange;
+
 private:
 	ABaseCharacter* HeroToDmg;
 
@@ -46,6 +49,12 @@ protected:
 	UFUNCTION(BlueprintImplementableEvent)
 	void DestroyEnemyEffect();
 
+	UFUNCTION(BlueprintImplementableEvent)
+	void DamageHeroEffect();
+
+	UFUNCTION(BlueprintCallable)
+	void DamageHero();
+
 private:
 	void DestroyEnemy();
 
@@ -55,5 +64,4 @@ private:
 	UFUNCTION()
 	void OnHeroEndOverlap(UPrimitiveComponent* ThisComp, AActor* ActorToDmg, UPrimitiveComponent* OtherComp, int32 Index);
 
-	void DamageHero();
 };

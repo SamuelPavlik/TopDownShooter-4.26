@@ -44,23 +44,25 @@ void AEnemyCharacter::DestroyEnemy() {
 	Destroy();
 }
 
+FTimerHandle DamageHandle;
 void AEnemyCharacter::OnHeroBeginOverlap(UPrimitiveComponent*, AActor* ActorToDmg, UPrimitiveComponent*, int32, bool, const FHitResult&) {
 	ABaseCharacter* Hero = Cast<ABaseCharacter>(ActorToDmg);
 	if (Hero && ActorToDmg->ActorHasTag(FRIENDLY)) {
 		this->HeroToDmg = Hero;
-		DamageHero();
-		FTimerHandle Handle;
-		GetWorldTimerManager().SetTimer(Handle, this, &AEnemyCharacter::DamageHero, 0.5f, true);
+		DamageHeroEffect();
+		GetWorldTimerManager().SetTimer(DamageHandle, this, &AEnemyCharacter::DamageHeroEffect, 1.5f, true);
 	}
 }
 
 void AEnemyCharacter::OnHeroEndOverlap(UPrimitiveComponent*, AActor* ActorToDmg, UPrimitiveComponent*, int32) {
 	if (ActorToDmg == HeroToDmg) {
-		GetWorldTimerManager().ClearAllTimersForObject(this);
+		GetWorldTimerManager().ClearTimer(DamageHandle);
 		HeroToDmg = NULL;
 	}
 }
 
 void AEnemyCharacter::DamageHero() {
-	HeroToDmg->AffectHealth(Damage);
+	if (HeroToDmg) {
+		HeroToDmg->AffectHealth(Damage);
+	}
 }
