@@ -1,18 +1,23 @@
 #include "Collectable.h"
-#include "Components/ShapeComponent.h"
+#include "Components/SphereComponent.h"
 #include "HeroCharacter.h"
 
 UCollectable::UCollectable() {
 	PrimaryComponentTick.bCanEverTick = true;
 
-	//CollisionVolume = CreateDefaultSubobject<USphereComponent>(TEXT("CollisionVolume"));
+	CollisionVolume = CreateDefaultSubobject<USphereComponent>(TEXT("CollisionVolume"));
+	CollisionVolume->SetCollisionResponseToAllChannels(ECollisionResponse::ECR_Ignore);
+	CollisionVolume->SetCollisionResponseToChannel(ECollisionChannel::ECC_Pawn, ECollisionResponse::ECR_Overlap);
+	CollisionVolume->SetCollisionObjectType(ECollisionChannel::ECC_WorldStatic);
+	CollisionVolume->SetCollisionEnabled(ECollisionEnabled::Type::QueryOnly);
 }
 
 void UCollectable::BeginPlay() {
 	if (AActor* Owner = GetOwner()) {
 		CollisionVolume = Owner->FindComponentByClass<UShapeComponent>();
 		CollisionVolume->OnComponentBeginOverlap.AddDynamic(this, &UCollectable::OnHeroBeginOverlap);
-		//CollisionVolume->SetupAttachment(Owner->GetRootComponent());
+		CollisionVolume->SetWorldLocation(Owner->GetActorLocation());
+		CollisionVolume->AttachToComponent(Owner->GetRootComponent(), FAttachmentTransformRules::SnapToTargetNotIncludingScale);
 	}
 }
 

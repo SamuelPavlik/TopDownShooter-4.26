@@ -7,6 +7,8 @@
 void UAmmoCollectable::Interact(AHeroCharacter* Hero) {
 	Hero->Weapon->AddClips(NumOfClips);
 	GetOwner()->Destroy();
+
+	// decrease ammo spawned actors for the spawner
 	TArray<AActor*> FoundSpawners;
 	UGameplayStatics::GetAllActorsWithTag(GetWorld(), TEXT("AmmoSpawner"), FoundSpawners);
 	for (AActor* Actor : FoundSpawners) {
