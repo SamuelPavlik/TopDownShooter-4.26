@@ -14,11 +14,7 @@ AMenuHeroCharacter::AMenuHeroCharacter() {
 	ViewRadius->SetupAttachment(GetRootComponent());
 }
 
-TArray<AActor*> AMenuHeroCharacter::GetTargets() {
-	return EnemiesInView;
-}
-
-bool AMenuHeroCharacter::NeedsToReload() {
+bool AMenuHeroCharacter::HasEmptyClip() {
 	return Weapon->CurrentClipAmmo <= 0;
 }
 
@@ -31,22 +27,16 @@ void AMenuHeroCharacter::ReloadWeapon() {
 void AMenuHeroCharacter::AffectHealth(float) {}
 
 void AMenuHeroCharacter::Tick(float) {
-	ViewRadius->GetOverlappingActors(EnemiesInView, AEnemyCharacter::StaticClass());
 	Shoot(CanShoot());
 }
 
 bool AMenuHeroCharacter::CanShoot() {
 	FHitResult Hit;
-
 	FCollisionQueryParams Params = FCollisionQueryParams::DefaultQueryParam;
 	Params.AddIgnoredActor(this);
 	Params.AddIgnoredActors(ActorsToIgnore);
-	GetWorld()->LineTraceSingleByChannel(
-		Hit,
-		GetActorLocation(),
-		GetActorRotation().Vector() * 4000.0f,
-		ECollisionChannel::ECC_Camera,
-		Params);
+	GetWorld()->LineTraceSingleByChannel(Hit, GetActorLocation(),
+		GetActorRotation().Vector() * 4000.0f, ECollisionChannel::ECC_Camera, Params);
 
 	if (UKismetSystemLibrary::IsValid(Hit.GetActor()) && Hit.GetActor()->ActorHasTag("Enemy")) {
 		if (IIDamagabley* ToDamage = Cast<IIDamagabley>(Hit.GetActor())) {

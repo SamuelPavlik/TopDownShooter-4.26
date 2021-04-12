@@ -23,4 +23,13 @@ protected:
 	virtual void BeginPlay() override;
 
 	virtual void Tick(float DeltaTime) override;
+
+private:
+	UFUNCTION()
+	void OnBeginOverlap(UPrimitiveComponent* ThisComp, AActor* Actor, UPrimitiveComponent* OtherComp, int32 Index, bool bFromSweep, const FHitResult& Hit);
+
+	UFUNCTION()
+	void OnEndOverlap(UPrimitiveComponent* ThisComp, AActor* Actor, UPrimitiveComponent* OtherComp, int32 Index);
+
+	void OnEnemyChange(UPrimitiveComponent* ViewRadius);
 };

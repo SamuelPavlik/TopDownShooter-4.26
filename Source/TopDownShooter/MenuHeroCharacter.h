@@ -17,9 +17,11 @@ class TOPDOWNSHOOTER_API AMenuHeroCharacter : public ABaseCharacter
 {
 	GENERATED_BODY()
 	
-protected:
+public:
 	UPROPERTY(EditAnywhere)
 	USphereComponent* ViewRadius;
+
+protected:
 
 	UPROPERTY(BlueprintReadWrite)
 	AWeapon* Weapon;
@@ -36,9 +38,7 @@ private:
 public:
 	AMenuHeroCharacter();
 
-	TArray<AActor*> GetTargets();
-
-	bool NeedsToReload();
+	bool HasEmptyClip();
 
 	void ReloadWeapon();
 

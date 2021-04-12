@@ -3,15 +3,44 @@
 
 #include "MenuHeroController.h"
 #include "MenuHeroCharacter.h"
+#include "EnemyCharacter.h"
+#include "Components/SphereComponent.h"
 #include "Kismet/GameplayStatics.h"
 
 void AMenuHeroController::Tick(float DeltaTime) {
 	Super::Tick(DeltaTime);
 
-	if (MenuHero->GetTargets().Num() > 0) {
-		AActor* Closest = MenuHero->GetTargets()[0];
+	if (MenuHero->HasEmptyClip()) {
+		MenuHero->ReloadWeapon();
+	}
+}
+
+void AMenuHeroController::BeginPlay() {
+	Super::BeginPlay();
+	MenuHero = Cast<AMenuHeroCharacter>(GetPawn());
+
+	if (USphereComponent* ViewRadius = MenuHero->ViewRadius) {
+		ViewRadius->OnComponentBeginOverlap.AddDynamic(this, &AMenuHeroController::OnBeginOverlap);
+		ViewRadius->OnComponentEndOverlap.AddDynamic(this, &AMenuHeroController::OnEndOverlap);
+	}
+}
+
+void AMenuHeroController::OnBeginOverlap(UPrimitiveComponent* ThisComp, AActor* Actor, 
+	UPrimitiveComponent* OtherComp, int32 Index, bool bFromSweep, const FHitResult& Hit) {
+	OnEnemyChange(ThisComp);
+}
+
+void AMenuHeroController::OnEndOverlap(UPrimitiveComponent* ThisComp, AActor* Actor, UPrimitiveComponent* OtherComp, int32 Index) {
+	OnEnemyChange(ThisComp);
+}
+
+void AMenuHeroController::OnEnemyChange(UPrimitiveComponent* ViewRadius) {
+	TArray<AActor*> EnemiesInView;
+	ViewRadius->GetOverlappingActors(EnemiesInView, AEnemyCharacter::StaticClass());
+	if (EnemiesInView.Num() > 0) {
+		AActor* Closest = EnemiesInView[0];
 		float ClosDist = FVector::Distance(Closest->GetActorLocation(), MenuHero->GetActorLocation());
-		for (AActor* Current : MenuHero->GetTargets()) {
+		for (AActor* Current : EnemiesInView) {
 			float CurrDist = FVector::Distance(Current->GetActorLocation(), MenuHero->GetActorLocation());
 			if (CurrDist < ClosDist) {
 				Closest = Current;
@@ -20,13 +49,4 @@ void AMenuHeroController::Tick(float DeltaTime) {
 		}
 		SetFocus(Closest);
 	}
-
-	if (MenuHero->NeedsToReload())
-		MenuHero->ReloadWeapon();
-}
-
-void AMenuHeroController::BeginPlay() {
-	Super::BeginPlay();
-
-	MenuHero = Cast<AMenuHeroCharacter>(GetPawn());
 }
