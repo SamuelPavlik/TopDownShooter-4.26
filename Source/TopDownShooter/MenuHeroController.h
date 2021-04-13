@@ -25,6 +25,8 @@ protected:
 	virtual void Tick(float DeltaTime) override;
 
 private:
+	bool IsFacingEnemy();
+
 	UFUNCTION()
 	void OnBeginOverlap(UPrimitiveComponent* ThisComp, AActor* Actor, UPrimitiveComponent* OtherComp, int32 Index, bool bFromSweep, const FHitResult& Hit);
 

@@ -11,7 +11,14 @@ void AMenuHeroController::Tick(float DeltaTime) {
 	Super::Tick(DeltaTime);
 
 	if (MenuHero->HasEmptyClip()) {
+		MenuHero->Shoot(false);
 		MenuHero->ReloadWeapon();
+	}
+	else if (IsFacingEnemy()) {
+		MenuHero->Shoot(true);
+	}
+	else {
+		MenuHero->Shoot(false);
 	}
 }
 
@@ -23,6 +30,22 @@ void AMenuHeroController::BeginPlay() {
 		ViewRadius->OnComponentBeginOverlap.AddDynamic(this, &AMenuHeroController::OnBeginOverlap);
 		ViewRadius->OnComponentEndOverlap.AddDynamic(this, &AMenuHeroController::OnEndOverlap);
 	}
+}
+
+bool AMenuHeroController::IsFacingEnemy() {
+	FHitResult Hit;
+	FCollisionQueryParams Params = FCollisionQueryParams::DefaultQueryParam;
+	Params.AddIgnoredActor(GetPawn());
+	GetWorld()->LineTraceSingleByChannel(Hit, GetPawn()->GetActorLocation(),
+		GetPawn()->GetActorRotation().Vector() * 4000.0f, ECollisionChannel::ECC_Camera, Params);
+
+	if (UKismetSystemLibrary::IsValid(Hit.GetActor()) && Hit.GetActor()->ActorHasTag("Enemy")) {
+		if (IIDamagabley* ToDamage = Cast<IIDamagabley>(Hit.GetActor())) {
+			return !ToDamage->IsKilled();
+		}
+	}
+
+	return false;
 }
 
 void AMenuHeroController::OnBeginOverlap(UPrimitiveComponent* ThisComp, AActor* Actor, 

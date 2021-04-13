@@ -26,14 +26,8 @@ protected:
 	UPROPERTY(BlueprintReadWrite)
 	AWeapon* Weapon;
 
-	UPROPERTY(BlueprintReadWrite)
-	TArray<AActor*> ActorsToIgnore;
-
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
 	bool bIsReloading;
-
-private:
-	TArray<AActor*> EnemiesInView;
 
 public:
 	AMenuHeroCharacter();
@@ -44,14 +38,9 @@ public:
 
 	virtual void AffectHealth(float) override;
 
-	virtual void Tick(float) override;
+	void Shoot(bool bPressed);
 
 protected:
 	UFUNCTION(BlueprintImplementableEvent)
 	void ReloadEffect();
-
-private:
-	bool CanShoot();
-
-	void Shoot(bool bPressed);
 };
