@@ -11,7 +11,7 @@ public class TopDownShooter : ModuleRules
 
 		//added based on this thread https://answers.unrealengine.com/questions/717562/view.html
 		MinFilesUsingPrecompiledHeaderOverride = 1;
-        //bFasterWithoutUnity = true;
+        bUseUnity = false;
         bEnforceIWYU = true;
 	
 		PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore", "UMG" });

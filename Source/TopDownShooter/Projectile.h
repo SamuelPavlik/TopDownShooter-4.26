@@ -25,9 +25,12 @@ public:
 	AProjectile();
 
 protected:
-	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+	virtual void PostInitializeComponents() override;
+
+	UFUNCTION(BlueprintImplementableEvent)
 	void DestroyProjectileEffect();
 
-	UFUNCTION(BlueprintCallable)
-	void DestroyProjectile(UPrimitiveComponent* Comp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 index, bool bSweep, const FHitResult& Hit);
+private:
+	UFUNCTION()
+	void OnEnemyHit(UPrimitiveComponent* HitComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit);
 };

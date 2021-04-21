@@ -6,4 +6,5 @@
 
 const FName FRIENDLY = TEXT("Friendly");
 const FName ENEMY = TEXT("Enemy");
+const FName PROJECTILE = TEXT("Projectile");
 const FName AMMO = TEXT("Ammo");

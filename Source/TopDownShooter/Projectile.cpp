@@ -11,16 +11,19 @@ AProjectile::AProjectile() {
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = false;
 
-
 	ProjectileCollision = CreateDefaultSubobject<USphereComponent>(TEXT("ProjectileCollision"));
 	RootComponent = ProjectileCollision;
-	//ProjectileCollision->SetupAttachment(RootComponent);
-	ProjectileCollision->OnComponentBeginOverlap.AddDynamic(this, &AProjectile::DestroyProjectile);
 }
 
-void AProjectile::DestroyProjectile(UPrimitiveComponent* Comp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 index, bool bSweep, const FHitResult& Hit) {
+void AProjectile::PostInitializeComponents() {
+	Super::PostInitializeComponents();
+
+	ProjectileCollision->OnComponentHit.AddDynamic(this, &AProjectile::OnEnemyHit);
+}
+
+void AProjectile::OnEnemyHit(UPrimitiveComponent*, AActor* OtherActor, UPrimitiveComponent*, FVector, const FHitResult&) {
 	if (IIDamagabley* Damagable = Cast<IIDamagabley>(OtherActor)) {
-		if (!OtherActor->ActorHasTag(FRIENDLY)) {
+		if (OtherActor->ActorHasTag(ENEMY)) {
 			DestroyProjectileEffect();
 			Damagable->AffectHealth(Damage);
 			Destroy();
