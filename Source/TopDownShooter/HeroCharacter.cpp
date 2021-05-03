@@ -32,11 +32,11 @@ void AHeroCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompo
 	PlayerInputComponent->BindAxis("MoveRight", this, &AHeroCharacter::MoveRight);
 
 	//fire logic
-	FInputActionBinding PullTriggerBinding("FireMapping", EInputEvent::IE_Pressed);
+	FInputActionBinding PullTriggerBinding("Fire", EInputEvent::IE_Pressed);
 	PullTriggerBinding.ActionDelegate.GetDelegateForManualSet().BindLambda([this]() {
 		Weapon->PullTrigger();
 	});
-	FInputActionBinding ReleaseTriggerBinding("FireMapping", EInputEvent::IE_Released);
+	FInputActionBinding ReleaseTriggerBinding("Fire", EInputEvent::IE_Released);
 	ReleaseTriggerBinding.ActionDelegate.GetDelegateForManualSet().BindLambda([this]() {
 		Weapon->ReleaseTrigger();
 	});
