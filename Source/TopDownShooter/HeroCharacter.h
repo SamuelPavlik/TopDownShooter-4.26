@@ -11,6 +11,8 @@ class ATopDownShooterGameModeBase;
 class UCameraComponent;
 class USpringArmComponent;
 
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnHealthUpdate);
+
 /**
  * 
  */
@@ -27,6 +29,9 @@ public:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
 	AWeapon* Weapon;
+
+	UPROPERTY(BlueprintAssignable, BlueprintReadOnly)
+	FOnHealthUpdate OnHealthUpdate;
 
 protected:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite)
@@ -48,6 +53,8 @@ public:
 	virtual void Tick(float DeltaTime) override;
 
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
+
+	virtual void AffectHealth(float Delta) override;
 
 	virtual void Kill() override;
 

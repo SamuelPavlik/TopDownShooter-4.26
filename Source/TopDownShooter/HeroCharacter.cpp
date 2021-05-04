@@ -54,6 +54,11 @@ void AHeroCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompo
 	PlayerInputComponent->AddActionBinding(PauseBinding);
 }
 
+void AHeroCharacter::AffectHealth(float Delta) {
+	Super::AffectHealth(Delta);
+	OnHealthUpdate.Broadcast();
+}
+
 void AHeroCharacter::Kill() {
 	if (APlayerController* HeroController = Cast<APlayerController>(GetController())) {
 		DisableInput(HeroController);
