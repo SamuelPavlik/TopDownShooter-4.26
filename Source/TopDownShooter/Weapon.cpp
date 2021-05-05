@@ -14,7 +14,7 @@ FTimerHandle Handle;
 void AWeapon::FireFunc() {
 	CanFire = true;
 	if (!Released && CurrentClipAmmo > 0) {
-		CurrentClipAmmo--;
+		SetAmmo(CurrentClipAmmo - 1);
 		this->Fire();
 		CanFire = false;
 		GetWorldTimerManager().SetTimer(Handle, this, &AWeapon::FireFunc, 1.0f / RoundsPerSec, false);
@@ -46,7 +46,7 @@ bool AWeapon::Reload() {
 		return false;
 	}
 	CurrentClip--;
-	CurrentClipAmmo = MaxClipAmmo;
+	SetAmmo(MaxClipAmmo);
 	return true;
 }
 
@@ -58,13 +58,14 @@ void AWeapon::StopShooting() {
 
 void AWeapon::AddClips(uint32 NumOfClips) {
 	CurrentClip += NumOfClips;
-	CurrentClipAmmo = CurrentClipAmmo == 0 ? MaxClipAmmo : CurrentClipAmmo;
+	SetAmmo(CurrentClipAmmo == 0 ? MaxClipAmmo : CurrentClipAmmo);
+	OnAmmoChange.Broadcast();
 }
 
 void AWeapon::BeginPlay() {
 	Super::BeginPlay();
 	
-	CurrentClipAmmo = MaxClipAmmo;
+	SetAmmo(MaxClipAmmo);
 	CurrentClip = 5;
 }
 
@@ -72,4 +73,9 @@ void AWeapon::Destroyed() {
 	Super::Destroyed();
 
 	GetWorldTimerManager().ClearAllTimersForObject(this);
+}
+
+void AWeapon::SetAmmo(int Ammo) {
+	CurrentClipAmmo = Ammo;
+	OnAmmoChange.Broadcast();
 }

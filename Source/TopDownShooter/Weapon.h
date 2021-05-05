@@ -6,6 +6,8 @@
 #include "GameFramework/Actor.h"
 #include "Weapon.generated.h"
 
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnAmmoChange);
+
 UCLASS()
 class TOPDOWNSHOOTER_API AWeapon : public AActor
 {
@@ -23,6 +25,9 @@ public:
 
 	UPROPERTY(BlueprintReadWrite, VisibleAnywhere)
 	int CurrentClip;
+
+	UPROPERTY(BlueprintAssignable, BlueprintReadOnly)
+	FOnAmmoChange OnAmmoChange;
 
 private:
 	bool Released = true;
@@ -56,5 +61,7 @@ protected:
 
 private:
 	void FireFunc();
+
+	void SetAmmo(int Ammo);
 
 };
