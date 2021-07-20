@@ -66,8 +66,8 @@ void AEnemyCharacter::OnHeroBeginOverlap(UPrimitiveComponent*, AActor* ActorToDm
 	ABaseCharacter* Hero = Cast<ABaseCharacter>(ActorToDmg);
 	if (Hero && ActorToDmg->ActorHasTag(FRIENDLY)) {
 		this->HeroToDmg = Hero;
-		DamageHeroEffect();
-		GetWorldTimerManager().SetTimer(DamageHandle, this, &AEnemyCharacter::DamageHeroEffect, 1.5f, true);
+		DamageHero();
+		GetWorldTimerManager().SetTimer(DamageHandle, this, &AEnemyCharacter::DamageHero, 1.5f, true);
 	}
 }
 
@@ -84,7 +84,7 @@ void AEnemyCharacter::OnProjectileBeginOverlap(UPrimitiveComponent*, AActor* Pro
 	}
 }
 
-void AEnemyCharacter::DamageHero() {
+void AEnemyCharacter::DamageHeroLogic() {
 	if (HeroToDmg) {
 		HeroToDmg->AffectHealth(Damage);
 	}

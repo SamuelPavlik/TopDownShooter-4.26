@@ -59,10 +59,10 @@ protected:
 	void DestroyEnemyEffect();
 
 	UFUNCTION(BlueprintImplementableEvent)
-	void DamageHeroEffect();
+	void DamageHero();
 
 	UFUNCTION(BlueprintCallable)
-	void DamageHero();
+	void DamageHeroLogic();
 
 private:
 	void DestroyEnemy();
