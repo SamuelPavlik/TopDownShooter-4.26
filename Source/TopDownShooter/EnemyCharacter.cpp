@@ -38,8 +38,6 @@ void AEnemyCharacter::PostInitializeComponents() {
 
 	GetCapsuleComponent()->OnComponentBeginOverlap.AddDynamic(this, &AEnemyCharacter::OnProjectileBeginOverlap);
 	GetMesh()->SetAllBodiesBelowSimulatePhysics(TEXT("spine_01"), true, false);
-	DamageVolume->OnComponentBeginOverlap.AddDynamic(this, &AEnemyCharacter::OnHeroBeginOverlap);
-	DamageVolume->OnComponentEndOverlap.AddDynamic(this, &AEnemyCharacter::OnHeroEndOverlap);
 }
 
 void AEnemyCharacter::BeginPlay() {
@@ -59,23 +57,6 @@ void AEnemyCharacter::DestroyEnemy() {
 	Spawner->DecrActors();
 	DestroyEnemyEffect();
 	Destroy();
-}
-
-FTimerHandle DamageHandle;
-void AEnemyCharacter::OnHeroBeginOverlap(UPrimitiveComponent*, AActor* ActorToDmg, UPrimitiveComponent*, int32, bool, const FHitResult&) {
-	ABaseCharacter* Hero = Cast<ABaseCharacter>(ActorToDmg);
-	if (Hero && ActorToDmg->ActorHasTag(FRIENDLY)) {
-		this->HeroToDmg = Hero;
-		DamageHero();
-		GetWorldTimerManager().SetTimer(DamageHandle, this, &AEnemyCharacter::DamageHero, 1.5f, true);
-	}
-}
-
-void AEnemyCharacter::OnHeroEndOverlap(UPrimitiveComponent*, AActor* ActorToDmg, UPrimitiveComponent*, int32) {
-	if (ActorToDmg == HeroToDmg) {
-		GetWorldTimerManager().ClearTimer(DamageHandle);
-		HeroToDmg = NULL;
-	}
 }
 
 void AEnemyCharacter::OnProjectileBeginOverlap(UPrimitiveComponent*, AActor* Projectile, UPrimitiveComponent*, int32, bool, const FHitResult&) {

@@ -14,9 +14,25 @@ class TOPDOWNSHOOTER_API AEnemyController : public AAIController
 {
 	GENERATED_BODY()
 
+private:
+	class AEnemyCharacter* EnemyPawn;
+
 protected:
 	virtual void BeginPlay() override;
 
+	virtual void OnPossess(APawn* InPawn) override;
+
 private:
+	UFUNCTION()
+	void DamageHero();
+
 	void TrackPlayer();
+
+	UFUNCTION()
+	void OnHeroBeginOverlap(UPrimitiveComponent* ThisComp, AActor* ActorToDmg,
+		UPrimitiveComponent* OtherComp, int32 Index, bool bFromSweep, const FHitResult& Hit);
+
+	UFUNCTION()
+	void OnHeroEndOverlap(UPrimitiveComponent* ThisComp, AActor* ActorToDmg,
+		UPrimitiveComponent* OtherComp, int32 Index);
 };

@@ -21,10 +21,12 @@ public:
 	UPROPERTY(BlueprintReadWrite)
 	float CurrentBlendWeight = 0.f;
 
-protected:
 	UPROPERTY(EditAnywhere)
 	UBoxComponent* DamageVolume;
 
+	ABaseCharacter* HeroToDmg;
+
+protected:
 	UPROPERTY(EditAnywhere)
 	float Damage = -20.0f;
 
@@ -35,12 +37,13 @@ protected:
 	bool bHeroInRange;
 
 private:
-	ABaseCharacter* HeroToDmg;
-
 	ATopDownShooterGameModeBase* GameMode;
 
 public:
 	AEnemyCharacter();
+
+	UFUNCTION(BlueprintImplementableEvent)
+	void DamageHero();
 
 	void SetSpawner(AEnemySpawner* Spawner);
 
@@ -56,22 +59,21 @@ protected:
 	UFUNCTION(BlueprintImplementableEvent)
 	void DestroyEnemyEffect();
 
-	UFUNCTION(BlueprintImplementableEvent)
-	void DamageHero();
-
 	UFUNCTION(BlueprintCallable)
 	void DamageHeroLogic();
 
 private:
 	void DestroyEnemy();
 
-	UFUNCTION()
-	void OnHeroBeginOverlap(UPrimitiveComponent* ThisComp, AActor* ActorToDmg, 
-		UPrimitiveComponent* OtherComp, int32 Index, bool bFromSweep, const FHitResult& Hit);
+	//---------------------------------
+	//UFUNCTION()
+	//void OnHeroBeginOverlap(UPrimitiveComponent* ThisComp, AActor* ActorToDmg, 
+	//	UPrimitiveComponent* OtherComp, int32 Index, bool bFromSweep, const FHitResult& Hit);
 
-	UFUNCTION()
-	void OnHeroEndOverlap(UPrimitiveComponent* ThisComp, AActor* ActorToDmg, 
-		UPrimitiveComponent* OtherComp, int32 Index);
+	//UFUNCTION()
+	//void OnHeroEndOverlap(UPrimitiveComponent* ThisComp, AActor* ActorToDmg, 
+	//	UPrimitiveComponent* OtherComp, int32 Index);
+	//---------------------------------
 
 	UFUNCTION()
 	void OnProjectileBeginOverlap(UPrimitiveComponent* ThisComp, AActor* ActorToDmg, 
