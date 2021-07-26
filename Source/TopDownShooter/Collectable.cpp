@@ -13,6 +13,8 @@ UCollectable::UCollectable() {
 }
 
 void UCollectable::BeginPlay() {
+	Super::BeginPlay();
+	
 	if (AActor* Owner = GetOwner()) {
 		CollisionVolume = Owner->FindComponentByClass<UShapeComponent>();
 		CollisionVolume->OnComponentBeginOverlap.AddDynamic(this, &UCollectable::OnHeroBeginOverlap);
