@@ -24,14 +24,17 @@ void AEnemyController::OnPossess(APawn* InPawn) {
 }
 
 void AEnemyController::DamageHero() {
-	EnemyPawn->DamageHero();
+	if (EnemyPawn->HeroToDmg) {
+		EnemyPawn->DamageHero();
+	}
 }
 
 void AEnemyController::TrackPlayer() {
 	TArray<AActor*> FoundHeroes;
 	UGameplayStatics::GetAllActorsWithTag(GetWorld(), FRIENDLY, FoundHeroes);
-	if (FoundHeroes.Num())
-		MoveToActor(FoundHeroes[0]);
+	if (FoundHeroes.Num()) {
+		MoveToActor(FoundHeroes[0], -1.0F, false);
+	}
 }
 
 FTimerHandle DamageHandle;
@@ -41,14 +44,12 @@ void AEnemyController::OnHeroBeginOverlap(UPrimitiveComponent* ThisComp, AActor*
 	if (Hero && ActorToDmg->ActorHasTag(FRIENDLY)) {
 		EnemyPawn->HeroToDmg = Hero;
 		DamageHero();
-		GetWorldTimerManager().SetTimer(DamageHandle, this, &AEnemyController::DamageHero, 1.5f, true);
 	}
 }
 
 void AEnemyController::OnHeroEndOverlap(UPrimitiveComponent* ThisComp, AActor* ActorToDmg, 
 	UPrimitiveComponent* OtherComp, int32 Index) {
 	if (ActorToDmg == EnemyPawn->HeroToDmg) {
-		GetWorldTimerManager().ClearTimer(DamageHandle);
 		EnemyPawn->HeroToDmg = NULL;
 	}
 }

@@ -17,15 +17,16 @@ class TOPDOWNSHOOTER_API AEnemyController : public AAIController
 private:
 	class AEnemyCharacter* EnemyPawn;
 
+public:
+	UFUNCTION(BlueprintCallable)
+	void DamageHero();
+
 protected:
 	virtual void BeginPlay() override;
 
 	virtual void OnPossess(APawn* InPawn) override;
 
 private:
-	UFUNCTION()
-	void DamageHero();
-
 	void TrackPlayer();
 
 	UFUNCTION()
