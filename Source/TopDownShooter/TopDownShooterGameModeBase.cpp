@@ -20,12 +20,16 @@ void ATopDownShooterGameModeBase::UnpauseGame() {
 void ATopDownShooterGameModeBase::RespawnPlayer() {
 	DestroyAllEnemies();
 	DestroyAllAmmo();
+
 	if (UWorld* World = GetWorld()) {
 		AActor* Hero = World->SpawnActor(HeroCharacterClass.Get(), &PlayerSpawnTransform);
 		World->GetFirstPlayerController()->Possess(Cast<APawn>(Hero));
-		GameEnemySpawner->Reset();
-		AmmoSpawner->Reset();
 	}
+
+	GameEnemySpawner->Reset();
+	AmmoSpawner->Reset();
+	ResetScore();
+
 }
 
 void ATopDownShooterGameModeBase::IncrementScore() {
@@ -78,7 +82,6 @@ void ATopDownShooterGameModeBase::BeginPlay() {
 	TArray<AActor*> FoundAmmoSpawners;
 	UGameplayStatics::GetAllActorsOfClass(GetWorld(), AmmoSpawner->StaticClass(), FoundAmmoSpawners);
 	AmmoSpawner = Cast<AActorSpawner>(FoundAmmoSpawners[0]);
-
 }
 
 void ATopDownShooterGameModeBase::ChangeMenuWidget(TSubclassOf<UUserWidget> NewWidgetClass) {

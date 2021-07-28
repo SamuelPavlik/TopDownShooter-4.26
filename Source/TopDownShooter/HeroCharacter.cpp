@@ -70,7 +70,6 @@ void AHeroCharacter::Kill() {
 			Weapon->Destroy();
 			Destroy();
 			GameMode->RespawnPlayer();
-			GameMode->ResetScore();
 		});
 		FTimerHandle Handle;
 		GetWorldTimerManager().SetTimer(Handle, TimerCallback, 3, false);

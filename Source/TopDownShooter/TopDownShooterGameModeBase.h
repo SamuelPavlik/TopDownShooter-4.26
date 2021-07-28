@@ -34,12 +34,12 @@ public:
 
     void IncrementScore();
 
-    void ResetScore();
-
 private:
     void DestroyAllEnemies();
 
     void DestroyAllAmmo();
+
+    void ResetScore();
 
 protected:
     virtual void BeginPlay() override;
