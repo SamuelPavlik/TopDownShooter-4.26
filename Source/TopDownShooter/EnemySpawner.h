@@ -15,5 +15,8 @@ class TOPDOWNSHOOTER_API AEnemySpawner : public AActorSpawner {
 public:	
 	virtual void SpawnActor() override;
 
+private:
+	UFUNCTION()
+	void OnEnemyDeathFunc();
 	
 };

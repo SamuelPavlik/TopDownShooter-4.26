@@ -13,10 +13,14 @@ void AEnemySpawner::SpawnActor() {
 			SpawnVolume->GetScaledBoxExtent());
 		APawn* EnemyPawn = UAIBlueprintHelperLibrary::SpawnAIFromClass(GetWorld(), 
 			ActorToSpawnClass, NULL, SpawnLoc);
+		
 		if (AEnemyCharacter* Enemy = Cast<AEnemyCharacter>(EnemyPawn)) {
-			Enemy->SetSpawner(this);
+			Enemy->OnEnemyDeath.AddDynamic(this, &AEnemySpawner::OnEnemyDeathFunc);
 			CurrOfActors++;
 		}
 	}
 }
 
+void AEnemySpawner::OnEnemyDeathFunc() {
+	CurrOfActors--;
+}

@@ -16,10 +16,6 @@ AEnemyCharacter::AEnemyCharacter() {
 	DamageVolume->SetupAttachment(GetRootComponent());
 }
 
-void AEnemyCharacter::SetSpawner(AEnemySpawner* SpawnerToSet) {
-	this->Spawner = SpawnerToSet;
-}
-
 void AEnemyCharacter::Kill() {
 	if (GameMode) {
 		GameMode->IncrementScore();
@@ -54,7 +50,7 @@ void AEnemyCharacter::Tick(float DeltaTime) {
 }
 
 void AEnemyCharacter::DestroyEnemy() {
-	Spawner->DecrActors();
+	OnEnemyDeath.Broadcast();
 	DestroyEnemyEffect();
 	Destroy();
 }

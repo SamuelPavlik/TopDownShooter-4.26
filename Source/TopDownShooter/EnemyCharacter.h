@@ -9,6 +9,8 @@ class ATopDownShooterGameModeBase;
 class UBoxComponent;
 class USkeletalMeshComponent;
 
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnEnemyDeath);
+
 /**
  * 
  */
@@ -26,12 +28,11 @@ public:
 
 	ABaseCharacter* HeroToDmg;
 
+	FOnEnemyDeath OnEnemyDeath;
+
 protected:
 	UPROPERTY(EditAnywhere)
 	float Damage = -20.0f;
-
-	UPROPERTY(BlueprintReadWrite)
-	AEnemySpawner* Spawner;
 
 	UPROPERTY(BlueprintReadWrite)
 	bool bHeroInRange;
