@@ -34,10 +34,12 @@ void ATopDownShooterGameModeBase::RespawnPlayer() {
 
 void ATopDownShooterGameModeBase::IncrementScore() {
 	Score++;
+	OnScoreUpdate.Broadcast();
 }
 
 void ATopDownShooterGameModeBase::ResetScore() {
 	Score = 0;
+	OnScoreUpdate.Broadcast();
 }
 
 void ATopDownShooterGameModeBase::DestroyAllEnemies() {

@@ -11,6 +11,8 @@
 class AActorSpawner;
 class AEnemySpawner;
 
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnScoreUpdate);
+
 /**
  * 
  */
@@ -40,6 +42,10 @@ private:
     void DestroyAllAmmo();
 
     void ResetScore();
+
+public:
+    UPROPERTY(BlueprintAssignable)
+    FOnScoreUpdate OnScoreUpdate;
 
 protected:
     virtual void BeginPlay() override;
