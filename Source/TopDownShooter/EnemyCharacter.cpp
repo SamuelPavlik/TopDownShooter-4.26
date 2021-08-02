@@ -24,6 +24,7 @@ void AEnemyCharacter::Kill() {
 	GetCapsuleComponent()->SetCollisionResponseToChannel(ECollisionChannel::ECC_WorldDynamic, ECollisionResponse::ECR_Ignore);
 	GetCapsuleComponent()->SetCollisionResponseToChannel(ECollisionChannel::ECC_Pawn, ECollisionResponse::ECR_Ignore);
 	DetachFromControllerPendingDestroy();
+	StopAnimMontage();
 
 	FTimerHandle Handle;
 	GetWorldTimerManager().SetTimer(Handle, this, &AEnemyCharacter::DestroyEnemy, 3.0f, false, 3.0f);
