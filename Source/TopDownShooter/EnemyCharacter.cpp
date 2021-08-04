@@ -24,6 +24,7 @@ void AEnemyCharacter::Kill() {
 	GetCapsuleComponent()->SetCollisionResponseToChannel(ECollisionChannel::ECC_WorldDynamic, ECollisionResponse::ECR_Ignore);
 	GetCapsuleComponent()->SetCollisionResponseToChannel(ECollisionChannel::ECC_Pawn, ECollisionResponse::ECR_Ignore);
 	DetachFromControllerPendingDestroy();
+	//stop attack montage if present
 	StopAnimMontage();
 
 	FTimerHandle Handle;
